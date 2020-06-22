@@ -1,0 +1,30 @@
+<%- include ("../partials/header") %>
+
+<!-- The "[text]" is for grouping the "names" together. This way,
+when we submit the form, everything keeps nested inside of "comment".
+Now, inside of our objects in the route, we can extract "comment",
+(req.body.comment) and it will have "text" and "author" inside of it -->
+
+<div class="row justify-content-center">
+  <div class="col-md-12 text-center">
+    <h1>Add New Comment to <%= campground.name %></h1>
+  </div>
+  <div class="col-xs-12 col-md-6 col-lg-4">
+    <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="comment[text]"
+          placeholder="This campground is awesome!"
+        />
+      </div>
+      <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block">Submit</button>
+      </div>
+    </form>
+    <a href="/campgrounds">Go Back</a>
+  </div>
+</div>
+
+<%- include ("../partials/footer") %>
