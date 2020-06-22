@@ -1,3 +1,36 @@
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.text-white-50 {
+  color: rgb(255, 255, 255) !important;
+}
+
+.bg-black {
+  background-color: #3b3b3d;
+}
+
+.lh-100 {
+  line-height: 1;
+}
+.lh-125 {
+  line-height: 1.25;
+}
+.lh-150 {
+  line-height: 1.5;
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;

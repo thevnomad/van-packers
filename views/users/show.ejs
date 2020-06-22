@@ -1,0 +1,51 @@
+<%- include ("../partials/header") %>
+
+<main role="main" class="container">
+  <div
+    class="d-flex align-items-center p-3 my-3 bg-black rounded shadow-sm"
+  >
+    <img class="mr-3" src="<%= user.avatar%>" alt="user profile image"
+    width="48" height="48" />
+    <div class="lh-100">
+      <h5 class="mb-0 text-white-50 lh-100">
+        <%= user.firstName + " " + user.lastName %>
+      </h5>
+      <small><a href="mailto:<%= user.email %>"><%= user.email %></a></small>
+    </div>
+  </div>
+
+  <div class="my-3 p-3 rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">
+      <%= user.username %>'s campgrounds:
+    </h6>
+    <% campgrounds.forEach(function(campground) { %>
+
+    <div class="media text-muted pt-3">
+      <img
+        class="bd-placeholder-img mr-2 rounded"
+        width="64"
+        height="64"
+        src="<%= campground.image %>"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+        role="img"
+        aria-label="Placeholder: 64x64"
+      >
+      </img>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark"
+          ><a href="/campgrounds/<%=campground.id%>"
+            ><%= campground.name %></a
+          ></strong
+        >
+        <%= campground.description %>
+      </p>
+    </div>
+    <% });%>
+    <small class="d-block text-right mt-3">
+      <a href="#">All updates</a>
+    </small>
+  </div>
+
+  <%- include ("../partials/footer") %>
+</main>

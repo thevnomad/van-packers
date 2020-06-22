@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user");
+const Campground = require("../models/campground");
 
 // ROOT ROUTE
 router.get("/", (req, res) => {
@@ -71,9 +72,18 @@ router.get("/users/:id", (req, res) => {
   User.findById(req.params.id, (err, foundUser) => {
     if (err) {
       req.flash("error", "Sorry, user not found.");
-      res.redirect("/");
+      return res.redirect("/");
     }
-    res.render("users/show", { user: foundUser });
+    Campground.find()
+      .where("author.id")
+      .equals(foundUser._id)
+      .exec((err, campgrounds) => {
+        if (err) {
+          req.flash("error", "Sorry, campground not found.");
+          return res.redirect("/");
+        }
+        res.render("users/show", { user: foundUser, campgrounds: campgrounds });
+      });
   });
 });
 
