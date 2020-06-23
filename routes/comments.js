@@ -59,8 +59,8 @@ router.get(
   (req, res) => {
     Campground.findById(req.params.id, (err, foundCampground) => {
       if (err || !foundCampground) {
-        req.flash("error", "Sorry, campground not found!");
-        return res.redirect("back");
+        // req.flash("error", "Sorry, campground not found!");
+        return res.redirect("/404");
       }
       Comment.findById(req.params.comment_id, (err, foundComment) => {
         if (err) {

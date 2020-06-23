@@ -67,9 +67,9 @@ router.get("/:id", (req, res) => {
     .populate("comments")
     .exec((err, foundCampground) => {
       if (err || !foundCampground) {
-        req.flash("error", "Sorry, campground not found!");
-        return res.redirect("back");
-        console.log(err.message);
+        // req.flash("error", "Sorry, campground not found!");
+        return res.redirect("/404");
+        // console.log(err.message);
       }
       console.log(foundCampground);
       // Render show template with that campground
@@ -110,8 +110,6 @@ router.put("/:id", isLoggedIn, checkCampgroundOwnership, (req, res) => {
     }
   );
 });
-
-// Redirect somewhere (show page)
 
 // DESTROY - Removes campground and its comments from DB
 router.delete("/:id", isLoggedIn, checkCampgroundOwnership, (req, res) => {

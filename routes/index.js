@@ -3,10 +3,16 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user");
 const Campground = require("../models/campground");
+const middleware = require("../middleware/auth");
+const { isLoggedIn } = middleware;
 
 // ROOT ROUTE
 router.get("/", (req, res) => {
   res.render("landing");
+});
+
+router.get("/404", (req, res) => {
+  res.render("error/404");
 });
 
 // =============
@@ -68,19 +74,19 @@ router.get("/logout", (req, res) => {
 });
 
 // USER PROFILE
-router.get("/users/:id", (req, res) => {
+router.get("/users/:id", isLoggedIn, (req, res) => {
   User.findById(req.params.id, (err, foundUser) => {
-    if (err) {
-      req.flash("error", "Sorry, user not found.");
-      return res.redirect("/");
+    if (err || !foundUser) {
+      // req.flash("error", "Sorry, user not found.");
+      return res.redirect("/404");
     }
     Campground.find()
       .where("author.id")
       .equals(foundUser._id)
       .exec((err, campgrounds) => {
         if (err) {
-          req.flash("error", "Sorry, campground not found.");
-          return res.redirect("/");
+          // req.flash("error", "Sorry, campground not found.");
+          return res.redirect("/404");
         }
         res.render("users/show", { user: foundUser, campgrounds: campgrounds });
       });
