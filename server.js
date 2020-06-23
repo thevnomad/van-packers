@@ -18,6 +18,7 @@ const methodOverride = require("method-override");
 const commentRoutes = require("./routes/comments");
 const campgroundRoutes = require("./routes/campgrounds");
 const indexRoutes = require("./routes/index");
+const userRoutes = require("./routes/users");
 
 const app = express();
 
@@ -90,6 +91,7 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 // Here, we pass an object {mergeParams: true}, inside "comments" route, to solve ":id" = null
 app.use("/campgrounds/:id/comments", commentRoutes);
+app.use(userRoutes);
 
 // Error Handling
 app.use((err, req, res, next) => {

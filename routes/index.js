@@ -2,15 +2,13 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user");
-const Campground = require("../models/campground");
-const middleware = require("../middleware/auth");
-const { isLoggedIn } = middleware;
 
 // ROOT ROUTE
 router.get("/", (req, res) => {
   res.render("landing");
 });
 
+// Error 404 - Page Not Found
 router.get("/404", (req, res) => {
   res.render("error/404");
 });
@@ -71,26 +69,6 @@ router.get("/logout", (req, res) => {
   req.logout(); // This comes from the packages we've installed
   req.flash("success", "See you later!");
   res.redirect("/campgrounds");
-});
-
-// USER PROFILE
-router.get("/users/:id", isLoggedIn, (req, res) => {
-  User.findById(req.params.id, (err, foundUser) => {
-    if (err || !foundUser) {
-      // req.flash("error", "Sorry, user not found.");
-      return res.redirect("/404");
-    }
-    Campground.find()
-      .where("author.id")
-      .equals(foundUser._id)
-      .exec((err, campgrounds) => {
-        if (err) {
-          // req.flash("error", "Sorry, campground not found.");
-          return res.redirect("/404");
-        }
-        res.render("users/show", { user: foundUser, campgrounds: campgrounds });
-      });
-  });
 });
 
 module.exports = router;

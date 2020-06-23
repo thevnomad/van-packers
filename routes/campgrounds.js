@@ -3,28 +3,45 @@ const router = express.Router();
 const Campground = require("../models/campground");
 const Comment = require("../models/comment");
 const middleware = require("../middleware/auth");
-const { isLoggedIn, checkCampgroundOwnership } = middleware; // Destructuring assignment
+const { isLoggedIn, checkCampgroundOwnership, isSafe } = middleware; // Destructuring assignment
+
+// Define escapeRegex function for search feature
+const escapeRegex = (text) => {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 // INDEX ROUTE - Show all campgrounds
 router.get("/", (req, res) => {
-  Campground.find({}, (err, allCampgrounds) => {
-    if (err) {
-      console.log(err.message);
-    } else {
-      if (req.xhr) {
-        res.json(allCampgrounds);
+  if (req.query.search && req.xhr) {
+    const regex = new RegExp(escapeRegex(req.query.search), "gi");
+    // Get all campgrounds from DB
+    Campground.find({ name: regex }, (err, allCampgrounds) => {
+      if (err) {
+        console.log(err);
       } else {
-        res.render("campgrounds/index", {
-          campgrounds: allCampgrounds,
-          page: "campgrounds",
-        });
+        res.status(200).json(allCampgrounds);
       }
-    }
-  });
+    });
+  } else {
+    Campground.find({}, (err, allCampgrounds) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        if (req.xhr) {
+          res.json(allCampgrounds);
+        } else {
+          res.render("campgrounds/index", {
+            campgrounds: allCampgrounds,
+            page: "campgrounds",
+          });
+        }
+      }
+    });
+  }
 });
 
 // CREATE ROUTE - Add new campground to DB
-router.post("/", isLoggedIn, (req, res) => {
+router.post("/", isLoggedIn, isSafe, (req, res) => {
   // Get data from form and add to campgrounds array
   const name = req.body.name;
   const image = req.body.image;
@@ -85,7 +102,7 @@ router.get("/:id/edit", isLoggedIn, checkCampgroundOwnership, (req, res) => {
 });
 
 // UPDATE CAMPGROUND ROUTE
-router.put("/:id", isLoggedIn, checkCampgroundOwnership, (req, res) => {
+router.put("/:id", isLoggedIn, isSafe, checkCampgroundOwnership, (req, res) => {
   const newData = {
     name: req.body.name,
     image: req.body.image,
