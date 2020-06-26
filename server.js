@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const express = require("express");
 const helmet = require("helmet");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -39,6 +38,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 // To get the whole PATH
 // console.log(__dirname)
+app.use(express.json());
 
 // Enabling CORS for all requests
 app.use(cors());
@@ -46,7 +46,7 @@ app.use(cors());
 app.use(morgan("combined"));
 app.use(helmet());
 // Using bodyParser to parse JSON bodies into JS objects
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(cookieParser("secret"));
 // Require moment
@@ -99,6 +99,6 @@ app.use((err, req, res, next) => {
   console.log("ERROR: " + err.message);
 });
 
-app.listen(3000, () => {
-  console.log("The VanPackers Server is listening on port 3000");
+app.listen(process.env.PORT, process.env.IP, () => {
+  console.log("The VanPackers Server Has Started!");
 });

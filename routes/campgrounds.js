@@ -3,15 +3,20 @@ const router = express.Router();
 const Campground = require("../models/campground");
 const Comment = require("../models/comment");
 const middleware = require("../middleware/auth");
-const { isLoggedIn, checkCampgroundOwnership, isSafe } = middleware; // Destructuring assignment
+let { isLoggedIn, checkCampgroundOwnership, isSafe, isPaid } = middleware; // Destructuring assignment
+router.use(isLoggedIn, isPaid);
 
 // Define escapeRegex function for search feature
 const escapeRegex = (text) => {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-// INDEX ROUTE - Show all campgrounds
+// GET - INDEX ROUTE - Show all campgrounds
 router.get("/", (req, res) => {
+  if (req.query.paid) {
+    res.locals.success = "Payment succeeded, welcome to VanPackers";
+  }
+
   if (req.query.search && req.xhr) {
     const regex = new RegExp(escapeRegex(req.query.search), "gi");
     // Get all campgrounds from DB
@@ -40,8 +45,8 @@ router.get("/", (req, res) => {
   }
 });
 
-// CREATE ROUTE - Add new campground to DB
-router.post("/", isLoggedIn, isSafe, (req, res) => {
+// POST - CREATE ROUTE - Add new campground to DB
+router.post("/", isSafe, (req, res) => {
   // Get data from form and add to campgrounds array
   const name = req.body.name;
   const image = req.body.image;
@@ -72,12 +77,12 @@ router.post("/", isLoggedIn, isSafe, (req, res) => {
   });
 });
 
-// NEW ROUTE - Show form to create new campground
-router.get("/new", isLoggedIn, (req, res) => {
+// GET - NEW ROUTE - Show form to create new campground
+router.get("/new", (req, res) => {
   res.render("campgrounds/new");
 });
 
-// SHOW ROUTE - Shows more info about one campground
+// GET - SHOW ROUTE - Shows more info about one campground
 router.get("/:id", (req, res) => {
   // Find the campground with provided ID
   Campground.findById(req.params.id)
@@ -94,15 +99,15 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// EDIT CAMPGROUND ROUTE
-router.get("/:id/edit", isLoggedIn, checkCampgroundOwnership, (req, res) => {
+// GET - EDIT CAMPGROUND ROUTE
+router.get("/:id/edit", checkCampgroundOwnership, (req, res) => {
   res.render("campgrounds/edit", {
     campground: req.campground,
   });
 });
 
-// UPDATE CAMPGROUND ROUTE
-router.put("/:id", isLoggedIn, isSafe, checkCampgroundOwnership, (req, res) => {
+// PUT - UPDATE CAMPGROUND ROUTE
+router.put("/:id", isSafe, checkCampgroundOwnership, (req, res) => {
   const newData = {
     name: req.body.name,
     image: req.body.image,
@@ -128,8 +133,8 @@ router.put("/:id", isLoggedIn, isSafe, checkCampgroundOwnership, (req, res) => {
   );
 });
 
-// DESTROY - Removes campground and its comments from DB
-router.delete("/:id", isLoggedIn, checkCampgroundOwnership, (req, res) => {
+// DELETE - Removes campground and its comments from DB
+router.delete("/:id", checkCampgroundOwnership, (req, res) => {
   Comment.remove(
     {
       _id: {

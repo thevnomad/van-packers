@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   avatar: String,
   password: String,
   isAdmin: { type: Boolean, default: false },
+  isPaid: { type: Boolean, default: false },
 });
 
 UserSchema.plugin(passportLocalMongoose);
