@@ -23,15 +23,27 @@ const app = express();
 
 // Init
 mongoose.connect(
-  process.env.DATABASE_URL,
+  process.env.MONGODB_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   },
   () => {
     console.log("MongoDB is running!");
   }
 );
+
+// mongoose.connect(
+//   process.env.DATABASE_URL,
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   },
+//   () => {
+//     console.log("Database connected!");
+//   }
+// );
 
 // Settings
 app.set("view engine", "ejs");

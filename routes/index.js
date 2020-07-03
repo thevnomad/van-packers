@@ -45,7 +45,7 @@ router.post("/register", (req, res) => {
     if (err) {
       // If the password is empty, the username is empty or the username is already taken
       req.flash("error", err.message);
-      return res.redirect("/register", { error: err.message });
+      return res.redirect("back");
     }
     passport.authenticate("local")(req, res, () => {
       req.flash("success", "Welcome to VanPackers, " + user.username + "!");
@@ -59,7 +59,7 @@ router.get("/login", (req, res) => {
   res.render("login", { page: "login" });
 });
 
-// POST - Handling login logic
+// POST - Handling LOGIN logic
 router.post(
   "/login",
   passport.authenticate("local", {

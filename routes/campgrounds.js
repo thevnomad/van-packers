@@ -4,7 +4,7 @@ const Campground = require("../models/campground");
 const Comment = require("../models/comment");
 const middleware = require("../middleware/auth");
 let { isLoggedIn, checkCampgroundOwnership, isSafe, isPaid } = middleware; // Destructuring assignment
-router.use(isLoggedIn, isPaid);
+// router.use(isLoggedIn);
 
 // Define escapeRegex function for search feature
 const escapeRegex = (text) => {
@@ -46,7 +46,7 @@ router.get("/", (req, res) => {
 });
 
 // POST - CREATE ROUTE - Add new campground to DB
-router.post("/", isSafe, (req, res) => {
+router.post("/", isLoggedIn, isPaid, isSafe, (req, res) => {
   // Get data from form and add to campgrounds array
   const name = req.body.name;
   const image = req.body.image;
@@ -78,12 +78,12 @@ router.post("/", isSafe, (req, res) => {
 });
 
 // GET - NEW ROUTE - Show form to create new campground
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, isPaid, (req, res) => {
   res.render("campgrounds/new");
 });
 
 // GET - SHOW ROUTE - Shows more info about one campground
-router.get("/:id", (req, res) => {
+router.get("/:id", isLoggedIn, isPaid, (req, res) => {
   // Find the campground with provided ID
   Campground.findById(req.params.id)
     .populate("comments")
@@ -100,63 +100,82 @@ router.get("/:id", (req, res) => {
 });
 
 // GET - EDIT CAMPGROUND ROUTE
-router.get("/:id/edit", checkCampgroundOwnership, (req, res) => {
-  res.render("campgrounds/edit", {
-    campground: req.campground,
-  });
-});
+router.get(
+  "/:id/edit",
+  isLoggedIn,
+  isPaid,
+  checkCampgroundOwnership,
+  (req, res) => {
+    res.render("campgrounds/edit", {
+      campground: req.campground,
+    });
+  }
+);
 
 // PUT - UPDATE CAMPGROUND ROUTE
-router.put("/:id", isSafe, checkCampgroundOwnership, (req, res) => {
-  const newData = {
-    name: req.body.name,
-    image: req.body.image,
-    price: req.body.price,
-    description: req.body.description,
-    location: req.body.location,
-  };
-  // Find and Update the correct campground
-  Campground.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: newData,
-    },
-    (err, campground) => {
-      if (err) {
-        req.flash("error", err.message);
-        res.redirect("back");
-      } else {
-        req.flash("success", "Campground successfully Updated!");
-        res.redirect("/campgrounds/" + campground._id);
+router.put(
+  "/:id",
+  isLoggedIn,
+  isPaid,
+  checkCampgroundOwnership,
+  isSafe,
+  (req, res) => {
+    const newData = {
+      name: req.body.name,
+      image: req.body.image,
+      price: req.body.price,
+      description: req.body.description,
+      location: req.body.location,
+    };
+    // Find and Update the correct campground
+    Campground.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: newData,
+      },
+      (err, campground) => {
+        if (err) {
+          req.flash("error", err.message);
+          res.redirect("back");
+        } else {
+          req.flash("success", "Campground successfully Updated!");
+          res.redirect("/campgrounds/" + campground._id);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 // DELETE - Removes campground and its comments from DB
-router.delete("/:id", checkCampgroundOwnership, (req, res) => {
-  Comment.remove(
-    {
-      _id: {
-        $in: req.campground.comments,
+router.delete(
+  "/:id",
+  isLoggedIn,
+  isPaid,
+  checkCampgroundOwnership,
+  (req, res) => {
+    Comment.remove(
+      {
+        _id: {
+          $in: req.campground.comments,
+        },
       },
-    },
-    (err) => {
-      if (err) {
-        req.flash("error", err.message);
-        res.redirect("/");
-      } else {
-        req.campground.remove(function (err) {
-          if (err) {
-            req.flash("error", err.message);
-            return res.redirect("/");
-          }
-          req.flash("error", "Campground successfully deleted!");
-          res.redirect("/campgrounds");
-        });
+      (err) => {
+        if (err) {
+          req.flash("error", err.message);
+          res.redirect("/");
+        } else {
+          req.campground.remove(function (err) {
+            if (err) {
+              req.flash("error", err.message);
+              return res.redirect("/");
+            }
+            req.flash("error", "Campground successfully deleted!");
+            res.redirect("/campgrounds");
+          });
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 module.exports = router;
