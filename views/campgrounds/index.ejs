@@ -3,7 +3,7 @@
     <header class="jumbotron">
       <div class="container">
         <h1><span></span><img src="/images/logo-via-logohub.png" alt=""></h1>
-        <p class="lead text-muted" id="muted">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora a dicta nihil exercitationem, quidem, perferendis eligendi libero incidunt ullam eaque fugiat ex voluptate labore expedita! Ullam voluptatem praesentium qui distinctio?</p>
+        <p class="lead text-muted" id="muted">Register, post, edit and share campgrounds from all around the world!</p>
         <div class="d-flex align-content-end flex-wrap" style="height: 120px">
           <div class="p-2 bd-highlight">
                     <a class="btn btn-danger btn-lg" href="/campgrounds/new">Add New Campground</a>
@@ -21,6 +21,14 @@
     </header>
     
     <div class="container">
+      <p class="lead text-muted">VanPackers is a Full Stack project designed with Node.js, Express.js and MongoDB.
+        The purpose of the app is to build a blog where people can share photos,
+        experiences, prices and more from campgrounds around the globe. The users can help
+        each other providing useful information about the camp sites they have visited.
+        This web app was designed for travellers, van lifers, adventurers and every person
+        that loves to camp! If you want to contribute, visit <a href="https://github.com/devmasf/van-packers"><i
+            class="devicon-github-plain colored"></i></a></p>
+            <hr id="hr">
       <div class="row text-center" id="campground-grid">
         <% campgrounds.forEach(function(campground){ %>
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">

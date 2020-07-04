@@ -37,7 +37,11 @@
 }
 
 .bg-black {
-  background-color: rgb(255, 148, 148);
+  background-color: rgb(141, 134, 180);
+}
+
+.bg-black a {
+  color: #f7f7f7f7;
 }
 
 .lh-100 {
@@ -78,6 +82,15 @@
   background: rgba(235, 233, 253, 0.2);
   width: 70%;
   border-radius: 0.5rem;
+}
+
+#hr {
+  margin: 50px 0 50px 0;
+}
+
+.devicon-github-plain {
+  font-size: 28px;
+  margin-left: 5px;
 }
 
 .form-signin {

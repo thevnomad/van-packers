@@ -11,8 +11,11 @@ that loves to camp!
 
 ## Features
 
-- Authentication & Authorization
+- Authentication & Authorization (edit or delete your own campgrounds)
 - Payment Method with Stripe API (payment needed after registration)
+- Fuzzy Search
+- User profile
+- Admin users
 - Post, comment and share campgrounds from all around the world
 
 ## Getting Started
@@ -49,6 +52,7 @@ $ npm run dev
 - [Cors](https://github.com/expressjs/cors)
 - [Morgan](https://github.com/expressjs/morgan)
 
-### UI
+### UI/UX
 
 - [Bootstrap 4](https://getbootstrap.com/)
+- [MomentJS](https://momentjs.com/)
