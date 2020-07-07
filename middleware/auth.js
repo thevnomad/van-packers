@@ -94,5 +94,3 @@ module.exports = {
     res.redirect("/checkout");
   },
 };
-
-// 1.46.15
