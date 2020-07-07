@@ -14,7 +14,8 @@ const escapeRegex = (text) => {
 // GET - INDEX ROUTE - Show all campgrounds
 router.get("/", (req, res) => {
   if (req.query.paid) {
-    res.locals.success = "Payment succeeded, welcome to VanPackers";
+    res.locals.success =
+      "Payment succeeded, thanks for contributing to VanPackers!";
   }
 
   if (req.query.search && req.xhr) {

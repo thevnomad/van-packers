@@ -221,3 +221,12 @@ footer {
 .delete-form {
   display: inline-block;
 }
+
+#flash {
+  width: auto;
+  display: table;
+}
+
+#flash h3 {
+  margin: 0;
+}

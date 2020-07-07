@@ -66,7 +66,7 @@ router.post(
     successRedirect: "/campgrounds",
     failureRedirect: "/login",
     failureFlash: true,
-    successFlash: "Welcome back!",
+    successFlash: "Welcome back, enjoy the journey!",
   }),
   (req, res) => {}
 );
@@ -74,7 +74,7 @@ router.post(
 // GET - LOGOUT ROUTE
 router.get("/logout", (req, res) => {
   req.logout(); // This comes from the packages we've installed
-  req.flash("success", "See you later!");
+  req.flash("success", "See you later, stay adventurous!");
   res.redirect("/campgrounds");
 });
 
