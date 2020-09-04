@@ -77,17 +77,6 @@ module.exports = {
       res.redirect("back");
     }
   },
-  isSafe: (req, res, next) => {
-    if (req.body.image.match(/^https:\/\/images\.unsplash\.com\/.*/)) {
-      next();
-    } else {
-      req.flash(
-        "error",
-        "Sorry, only images from images.unsplash.com allowed.\nClick here 'https://unsplash.com' to go to Unsplash"
-      );
-      res.redirect("back");
-    }
-  },
   isPaid: (req, res, next) => {
     if (req.user.isPaid) return next();
     req.flash("error", "Please pay registration fee before continuing");

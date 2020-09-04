@@ -4,7 +4,7 @@ const Campground = require("../models/campground");
 const Comment = require("../models/comment");
 const middleware = require("../middleware/auth");
 var multer = require("multer");
-let { isLoggedIn, checkCampgroundOwnership, isSafe, isPaid } = middleware; // Destructuring assignment
+let { isLoggedIn, checkCampgroundOwnership, isPaid } = middleware; // Destructuring assignment
 // router.use(isLoggedIn);
 
 // Multer config
@@ -140,38 +140,31 @@ router.get(
 );
 
 // PUT - UPDATE CAMPGROUND ROUTE
-router.put(
-  "/:id",
-  isLoggedIn,
-  isPaid,
-  checkCampgroundOwnership,
-  isSafe,
-  (req, res) => {
-    const newData = {
-      name: req.body.name,
-      image: req.body.image,
-      price: req.body.price,
-      description: req.body.description,
-      location: req.body.location,
-    };
-    // Find and Update the correct campground
-    Campground.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: newData,
-      },
-      (err, campground) => {
-        if (err) {
-          req.flash("error", err.message);
-          res.redirect("back");
-        } else {
-          req.flash("success", "Campground successfully Updated!");
-          res.redirect("/campgrounds/" + campground._id);
-        }
+router.put("/:id", isLoggedIn, isPaid, checkCampgroundOwnership, (req, res) => {
+  const newData = {
+    name: req.body.name,
+    image: req.body.image,
+    price: req.body.price,
+    description: req.body.description,
+    location: req.body.location,
+  };
+  // Find and Update the correct campground
+  Campground.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: newData,
+    },
+    (err, campground) => {
+      if (err) {
+        req.flash("error", err.message);
+        res.redirect("back");
+      } else {
+        req.flash("success", "Campground successfully Updated!");
+        res.redirect("/campgrounds/" + campground._id);
       }
-    );
-  }
-);
+    }
+  );
+});
 
 // DELETE - Removes campground and its comments from DB
 router.delete(
