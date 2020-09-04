@@ -3,8 +3,32 @@ const router = express.Router();
 const Campground = require("../models/campground");
 const Comment = require("../models/comment");
 const middleware = require("../middleware/auth");
+var multer = require("multer");
 let { isLoggedIn, checkCampgroundOwnership, isSafe, isPaid } = middleware; // Destructuring assignment
 // router.use(isLoggedIn);
+
+// Multer config
+var storage = multer.diskStorage({
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  },
+});
+var imageFilter = function (req, file, cb) {
+  // accept image files only
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+    return cb(new Error("Only image files are allowed!"), false);
+  }
+  cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter });
+
+// Cloudinary config
+var cloudinary = require("cloudinary");
+cloudinary.config({
+  cloud_name: "devnomad",
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // Define escapeRegex function for search feature
 const escapeRegex = (text) => {
@@ -47,34 +71,36 @@ router.get("/", (req, res) => {
 });
 
 // POST - CREATE ROUTE - Add new campground to DB
-router.post("/", isLoggedIn, isPaid, isSafe, (req, res) => {
-  // Get data from form and add to campgrounds array
-  const name = req.body.name;
-  const image = req.body.image;
-  const price = req.body.price;
-  const desc = req.body.description;
-  const location = req.body.location;
-  const author = {
-    id: req.user._id,
-    username: req.user.username,
-  };
-  const newCampground = {
-    name: name,
-    image: image,
-    price: price,
-    description: desc,
-    location: location,
-    author: author,
-  };
-  // Create a new campground and save it to DB
-  Campground.create(newCampground, (err, newlyCreated) => {
-    if (err) {
-      console.log(err.message);
-    } else {
-      // Redirect back to "Campgrounds Page"
-      console.log(newlyCreated);
-      res.redirect("/campgrounds");
-    }
+router.post("/", isLoggedIn, isPaid, upload.single("image"), (req, res) => {
+  cloudinary.uploader.upload(req.file.path, function (result) {
+    // Get data from form and add to campgrounds array
+    req.body.campground.image = result.secure_url;
+    const name = req.body.campground.name;
+    const price = req.body.campground.price;
+    const desc = req.body.campground.description;
+    const location = req.body.campground.location;
+    const author = {
+      id: req.user._id,
+      username: req.user.username,
+    };
+    const newCampground = {
+      name: name,
+      image: req.body.campground.image,
+      price: price,
+      description: desc,
+      location: location,
+      author: author,
+    };
+    // Create a new campground and save it to DB
+    Campground.create(newCampground, (err, newlyCreated) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        // Redirect back to "Campground's Page"
+        console.log(newlyCreated);
+        res.redirect("/campgrounds/" + newlyCreated.id);
+      }
+    });
   });
 });
 
