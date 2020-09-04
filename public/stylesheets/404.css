@@ -23,8 +23,11 @@ body {
   text-align: center;
 }
 a {
-  color: inherit;
-  text-decoration: none;
+  color: #fff;
+  transition: 0.5s;
+}
+a:hover {
+  color: #62478d;
 }
 .star {
   position: absolute;
@@ -49,6 +52,10 @@ a {
   background-color: transparent;
   border-radius: 8em;
   color: #e1e8f3;
+}
+.error__button a {
+  /* color: inherit; */
+  text-decoration: none;
 }
 
 @keyframes astronautFly {
