@@ -1,6 +1,6 @@
 body {
   background-color: #000;
-  font-family: "Lato";
+  font-family: "Lato", serif;
 }
 
 h1 {
@@ -55,22 +55,22 @@ hr {
 }
 
 .slideshow li:nth-child(1) {
-  background-image: url(/images/kevin-schmid-Mta8r0bxhbo-unsplash.jpg);
+  background-image: url(/images/pexels-kun-fotografi-1230302.jpg);
 }
 .slideshow li:nth-child(2) {
-  background-image: url(/images/camp1.jpg);
+  background-image: url(/images/zach-betten-K9olx8OF36A-unsplash.jpg);
   animation-delay: 8s;
 }
 .slideshow li:nth-child(3) {
-  background-image: url(/images/kevin-ianeselli-ebnlHkqfUHY-unsplash.jpg);
+  background-image: url(/images/pexels-headshatter-1252399.jpg);
   animation-delay: 16s;
 }
 .slideshow li:nth-child(4) {
-  background-image: url(/images/blake-wisz-TcgASSD5G04-unsplash.jpg);
+  background-image: url(/images/kevin-schmid-Mta8r0bxhbo-unsplash.jpg);
   animation-delay: 24s;
 }
 .slideshow li:nth-child(5) {
-  background-image: url(/images/tommy-lisbin-2DH-qMX6M4E-unsplash.jpg);
+  background-image: url(/images/rahul-bhosale-yBgC-qVCxMg-unsplash.jpg);
   animation-delay: 32s;
 }
 
@@ -94,4 +94,32 @@ hr {
 /* Older browser support - .no-cssanimations class added by modernizr */
 .no-cssanimations .slideshow li {
   opacity: 1;
+}
+
+@media (max-width: 992px) {
+  h1 {
+    font-size: 34px;
+    margin-bottom: 2rem;
+  }
+  h3 {
+    font-size: 18px;
+  }
+
+  hr {
+    width: 300px;
+  }
+
+  #landing-header {
+    margin-top: 10rem;
+  }
+
+  a {
+    max-height: 8vh;
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (min-width: 1024px) {
 }
