@@ -179,7 +179,7 @@ router.put(
           (campground.description = req.body.description),
           (campground.location = req.body.location),
           campground.save();
-        req.flash("success", "Campground successfully Updated!");
+        req.flash("success", "Campground successfully updated!");
         res.redirect("/campgrounds/" + campground._id);
       }
     });
