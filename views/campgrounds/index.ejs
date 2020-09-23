@@ -1,47 +1,154 @@
 <%- include ("../partials/header") %>
 
-    <header class="jumbotron">
-      <div class="container">
-        <h1><span></span><img src="/images/logo-via-logohub.png" alt=""></h1>
-        <p class="lead text-muted" id="muted">Register, post, edit and share campgrounds from all around the world!</p>
-        <div class="d-flex align-content-end flex-wrap" style="height: 120px">
-          <div class="p-2 bd-highlight">
-                    <a class="btn btn-danger btn-lg" href="/campgrounds/new">Add New Campground</a>
-                    <p>
-                    <form action="/campgrounds" method="GET" class="form-inline" id="campground-search">
-                      <div class="form-group">
-                        <input type="text" name="search" placeholder="Campground search..." class="form-control">
-                      </div>
-                    </form>
-                    </p>
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+  <div class="hero-container">
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+
+      <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="carousel-container">
+            <div class="carousel-content">
+
+              <h1 class="logo mr-auto"><a class="navbar-brand" href="/"><img src="/images/logo-via-logohub.png"
+                    alt=""></a>
+              </h1>
+              <hr>
+              <h2 class="animate__animated animate__fadeInDown">Hiking at Sundown</h2>
+              <p class="animate__animated animate__fadeInUp">Merzouga is a village in the Sahara Desert in Morocco, on
+                the edge of Erg Chebbi, a 50km long and 5km wide set of sand dunes that reach up to 350m...</p>
+              <span>Photo by <a
+                  href="https://unsplash.com/@iaminbaltal?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Inbal
+                  Malca</a> on <a
+                  href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+              <div>
+                <br>
+                <a href="https://wikitravel.org/en/Merzouga"
+                  class="btn-get-started animate__animated animate__fadeInUp scrollto">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+          <div class="carousel-container">
+            <div class="carousel-content">
+
+              <h1 class="logo mr-auto"><a class="navbar-brand" href="/"><img src="/images/logo-via-logohub.png"
+                    alt=""></a>
+              </h1>
+              <hr>
+              <h2 class="animate__animated animate__fadeInDown">Sunset in the City of Joy</h2>
+              <p class="animate__animated animate__fadeInUp">Known as the ‘City of Joy’, Kolkata holds an important
+                place in the economy, politics and culture of India. The capital of West Bengal, Kolkata is one of the
+                four...</p>
+              <span>Photo by <a
+                  href="https://unsplash.com/@martinjernberg?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Martin
+                  Jernberg</a> on <a
+                  href="https://unsplash.com/s/photos/india?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+              <div>
+                <br>
+                <a href="https://www.india.com/travel/kolkata/"
+                  class="btn-get-started animate__animated animate__fadeInUp scrollto">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h1 class="logo mr-auto"><a class="navbar-brand" href="/"><img src="/images/logo-via-logohub.png"
+                    alt=""></a>
+              </h1>
+              <hr>
+              <h2 class="animate__animated animate__fadeInDown">Christmas Lights</h2>
+              <p class="animate__animated animate__fadeInUp">The canal Alzaia Naviglio Grande in Milano, Italy, is the
+                first and largest canal in Europe. It connected Milan with Maggiore Lake and Switzerland, so people
+                could...</p>
+              <span>Photo by <a
+                  href="https://unsplash.com/@cristina_gottardi?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Cristina
+                  Gottardi</a> on <a
+                  href="https://unsplash.com/s/photos/italy-city?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+              <div>
+                <br>
+                <a href="https://travel.sygic.com/en/poi/naviglio-grande-poi:50898"
+                  class="btn-get-started animate__animated animate__fadeInUp scrollto">Read More</a>
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
-    </header>
-    
-    <div class="container">
-      <p class="lead text-muted">VanPackers is a Full Stack project designed with Node.js, Express.js and MongoDB.
-        The purpose of the app is to build a blog where people can share photos,
-        experiences, prices and more from campgrounds around the globe. The users can help
-        each other providing useful information about the camp sites they have visited.
-        This web app was designed for travellers, van lifers, adventurers and every person
-        that loves to camp! If you want to contribute, visit <a href="https://github.com/devmasf/van-packers"><i
-            class="devicon-github-plain colored"></i></a></p>
-            <hr id="hr">
-      <div class="row text-center" id="campground-grid">
-        <% campgrounds.forEach(function(campground){ %>
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="<%= campground.image %>" alt="<%= campground.name %>">
-            <div class="card-body">
-              <h5 class="card-title"><%= campground.name %></h5>
-              <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>
+
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon bx bxs-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon bx bxs-chevron-right" aria-hidden=" true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+
+    </div>
+
+  </div>
+  </div>
+</section>
+<!-- End Hero -->
+
+<!-- ======= Campgrounds Section ======= -->
+<section id="campgrounds" class="padd-section">
+
+  <div class="container">
+    <div class="section-title text-center mb-4">
+
+      <h2>Latests Campground's Post</h2>
+      <p class="separator">Register, post, edit and share campgrounds from around
+        the
+        world!</p>
+    </div>
+
+    <div id="campground-search-add">
+      <a href="/campgrounds/new" class="btn-get-started animate__animated animate__fadeInUp scrollto">Add New
+        Campground</a>
+      <p>
+      <form action="/campgrounds" method="GET" class="form-inline" id="campground-search">
+        <div class="form-group">
+          <input type="text" name="search" placeholder="Campground search..." class="form-control">
+        </div>
+      </form>
+      </p>
+    </div>
+
+    <div class="row" data-aos="fade-up" data-aos-delay="100" id="campground-grid">
+      <% campgrounds.forEach(function(campground){ %>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="block-campgrounds text-left">
+          <a href="#"><img class="img-responsive" src="<%= campground.image %>" alt="<%= campground.name %>"></a>
+          <div class="content-campgrounds">
+            <h4><a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a></h4>
+            <div class="description">
+              <p><%= campground.description.substring(0, 100) %>...</p>
             </div>
+            <span><em>Submitted by <a
+                  href="/users/<%= campground.author.id %>"><%= campground.author.username %></a></em></span>
+            <a class="pull-right readmore" href="/campgrounds/<%= campground._id %>">read more</a>
           </div>
         </div>
-        <% }); %>
       </div>
+      <% }); %>
     </div>
+  </div>
+</section>
+<!-- End Campgrounds Section -->
 
 <%- include ("../partials/footer") %>
