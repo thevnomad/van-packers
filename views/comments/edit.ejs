@@ -5,30 +5,22 @@ when we submit the form, everything keeps nested inside of "comment".
 So, inside of our objects in the route, we can extract "comment",
 (req.body.comment) and it will have "text" and "author" inside of it -->
 
-<div class="row justify-content-center">
-  <div class="col-md-12 text-center">
-    <h1>Edit Comment</h1>
+<div class="row justify-content-center" id="comment">
+  <div class="col-md-12 text-center mb-3">
+    <h1>Edit your comment:</h1>
   </div>
   <div class="col-xs-12 col-md-6 col-lg-4">
-    <form
-      action="/campgrounds/<%= campground_id %>/comments/<%=comment._id %>?_method=PUT"
-      method="POST"
-    >
+    <form action="/campgrounds/<%= campground_id %>/comments/<%=comment._id %>?_method=PUT" method="POST">
       <div class="form-group">
-        <input
-          class="form-control"
-          type="text"
-          value="<%=comment.text %>"
-          name="comment[text]"
-          placeholder="This campground is awesome!"
-        />
+        <input class="form-control" type="text" value="<%=comment.text %>" name="comment[text]"
+          placeholder="Your comment" minlength="12" />
       </div>
       <div class="form-group">
         <button class="btn btn-lg btn-primary btn-block">Submit</button>
       </div>
     </form>
-    <a href="/campgrounds">Go Back</a>
+    <a href="/campgrounds/<%= campground_id %>">Go Back</a>
   </div>
 </div>
 
-<%- include ("../partials/footer") %>
+<%- include ("../partials/footer_v2") %>
