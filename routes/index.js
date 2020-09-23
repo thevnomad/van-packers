@@ -20,6 +20,11 @@ router.get("/404", (req, res) => {
   res.render("error/404");
 });
 
+// GET - Coming Soon Page
+router.get("/maintenance", (req, res) => {
+  res.render("coming_soon/comingsoon");
+});
+
 // =============
 //  AUTH ROUTES
 // =============
