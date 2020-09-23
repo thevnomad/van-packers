@@ -36,6 +36,7 @@ router.post("/", (req, res) => {
           // Add username and id to comment
           comment.author.id = req.user._id;
           comment.author.username = req.user.username;
+          comment.author.avatar = req.user.avatar;
           // Save comment
           comment.save();
           // Asociating the comment to the campground

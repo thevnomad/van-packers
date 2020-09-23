@@ -9,6 +9,7 @@ const commentSchema = mongoose.Schema({
       ref: "User", // "ref" is the model that we are refering to with "ObjectId"
     },
     username: String,
+    avatar: String,
   },
 });
 
